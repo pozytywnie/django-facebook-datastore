@@ -12,6 +12,7 @@ setup(
         'django==1.4',
         'facebook-javascript-authentication',
         'facebook-javascript-sdk',
+        'factory-boy',
         'south==0.7.5',
     ),
     packages=find_packages(),
