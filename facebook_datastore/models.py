@@ -54,3 +54,14 @@ class FacebookUserProfile(models.Model):
                 setattr(self, key, value)
             else:
                 logger.warning("FacebookUserProfile has no '%s' atribute" % key)
+
+
+class FacebookUserLike(models.Model):
+    user = models.ForeignKey('auth.User')
+    name = models.CharField(max_length=250)
+    category = models.CharField(max_length=250)
+    facebook_id = models.BigIntegerField()
+    created_time = models.DateTimeField()
+
+    class Meta:
+        unique_together = ("user", "facebook_id")

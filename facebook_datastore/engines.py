@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import copy
+import isodate
 import json
 import logging
 import threading
@@ -28,9 +29,9 @@ class BaseThreadedEngine(object):
 
     def run(self):
         if self.should_run():
+            # http://stackoverflow.com/a/660974
             try:
-                # http://stackoverflow.com/a/660974
-                thread = threading.Thread(target=self.perform)
+                thread = self.Thread(target=self.perform)
                 thread.start()
             finally:
                 db.close_connection()
@@ -75,3 +76,47 @@ class UserProfileEngine(BaseThreadedEngine):
         else:
             profile.user = user
         profile.save()
+
+
+class UserLikeEngine(BaseThreadedEngine):
+    def fetch(self):
+        graph = facepy.GraphAPI(self.facebook_user.access_token)
+        likes = []
+
+        response = graph.get('me/likes', True)
+        for page in response:
+            if 'data' in page and page['data']:
+                likes += page['data']
+        return likes
+
+    def parse(self, data):
+        for like in data:
+            like['id'] = int(like['id'])
+            like['created_time'] = isodate.parse_datetime(like['created_time'])
+            yield like
+
+    def get_user(self):
+        try:
+            return User.objects.get(id=self.facebook_user.id)
+        except User.DoesNotExist:
+            message = "UserProfileEngine missing user for facebook_user %d"
+            logger.warning(message % self.facebook_user.id)
+            raise
+
+    def save(self, data):
+        user = self.get_user()
+        processed_likes = []
+        for like in data:
+            user_like = models.FacebookUserLike.objects
+            defaults = {'name': like['name'],
+                        'category': like['category'],
+                        'created_time': like['created_time']}
+
+            like, _ = user_like.get_or_create(user=user,
+                                              facebook_id=like['id'],
+                                              defaults=defaults)
+            processed_likes.append(like.id)
+
+        removed_likes = models.FacebookUserLike.objects.filter(user=user)
+        removed_likes = removed_likes.exclude(id__in=processed_likes)
+        removed_likes.delete()

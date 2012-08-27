@@ -13,6 +13,7 @@ setup(
         'facebook-javascript-authentication',
         'facebook-javascript-sdk',
         'factory-boy',
+        'isodate',
         'south==0.7.5',
     ),
     packages=find_packages(),
