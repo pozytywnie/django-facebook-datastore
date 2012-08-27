@@ -31,7 +31,7 @@ ROOT_URLCONF = 'datastore.urls'
 WSGI_APPLICATION = 'datastore.wsgi.application'
 
 PROJECT_APPS = (
-    'engines',
+    'facebook_datastore',
 )
 
 INSTALLED_APPS = (
