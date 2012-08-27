@@ -1,0 +1,40 @@
+{
+  "id": "100002364688506",
+  "name": "Tomasz Pazurkiewicz",
+  "first_name": "Tomasz",
+  "last_name": "Pazurkiewicz",
+  "link": "https://www.facebook.com/profile.php?id=100002364688506",
+  "birthday": "08/18/1989",
+  "favorite_teams": [
+    {
+      "id": "109571122394461",
+      "name": "AZS UWM Olsztyn"
+    }
+  ],
+  "education": [
+    {
+      "school": {
+        "id": "122102007821446",
+        "name": "LO 4 Olsztyn"
+      },
+      "year": {
+        "id": "141778012509913",
+        "name": "2008"
+      },
+      "type": "High School",
+      "with": [
+        {
+          "id": "100000350644209",
+          "name": "Klaudia Wiśniewska"
+        }
+      ]
+    }
+  ],
+  "gender": "male",
+  "relationship_status": "It's complicated",
+  "timezone": 1,
+  "locale": "en_GB",
+  "verified": true,
+  "updated_time": "2012-02-24T10:00:54+0000",
+  "type": "user"
+}
