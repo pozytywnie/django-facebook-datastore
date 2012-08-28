@@ -118,3 +118,6 @@ class UserLikeEngine(BaseThreadedEngine):
         removed_likes = models.FacebookUserLike.objects.filter(user=user)
         removed_likes = removed_likes.exclude(id__in=processed_likes)
         removed_likes.delete()
+
+
+ENGINES_ENABLED = [UserProfileEngine, UserLikeEngine]
