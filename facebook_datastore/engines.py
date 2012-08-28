@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 import copy
 import isodate
-import json
 import logging
 import threading
 
@@ -59,8 +58,7 @@ class UserProfileEngine(BaseThreadedEngine):
 
     def fetch(self):
         graph = facepy.GraphAPI(self.facebook_user.access_token)
-        data = graph.get('me')
-        return json.loads(data)
+        return graph.get('me')
 
     def parse(self, data):
         parser_instance = parser.FacebookDataParser(data=data)
