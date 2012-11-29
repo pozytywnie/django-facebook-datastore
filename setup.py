@@ -4,7 +4,7 @@ from setuptools import setup
 
 setup(
     name='facebook-datastore',
-    version='0.1',
+    version='0.1.1',
     description="Facebook Datastore",
     maintainer="Tomasz Wysocki",
     maintainer_email="tomasz@wysocki.info",
