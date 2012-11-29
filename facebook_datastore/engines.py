@@ -53,7 +53,7 @@ class BaseThreadedEngine(object):
 class UserProfileEngine(BaseThreadedEngine):
     def should_run(self):
         facebook_id = self.facebook_user.user_id
-        return models.FacebookUserProfile.objects.filter(
+        return not models.FacebookUserProfile.objects.filter(
             facebook_id=facebook_id).exists()
 
     def fetch(self):
