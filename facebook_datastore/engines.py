@@ -1,11 +1,8 @@
 # -*- coding: utf-8 -*-
-import copy
 import isodate
 import logging
-import threading
 
 from django.contrib.auth.models import User
-from django import db
 from facebook_datastore import models
 from facebook_datastore import parser
 import facepy
@@ -13,27 +10,20 @@ import facepy
 logger = logging.getLogger(__name__)
 
 
-class BaseThreadedEngine(object):
+class BaseEngine(object):
     """
     TODO - handle 500
     """
-    Thread = threading.Thread
-
     def __init__(self, facebook_user):
-        super(BaseThreadedEngine, self).__init__()
-        self.facebook_user = copy.deepcopy(facebook_user)
+        super(BaseEngine, self).__init__()
+        self.facebook_user = facebook_user
 
     def should_run(self):
         return True
 
     def run(self):
         if self.should_run():
-            # http://stackoverflow.com/a/660974
-            try:
-                thread = self.Thread(target=self.perform)
-                thread.start()
-            finally:
-                db.close_connection()
+            self.perform()
 
     def perform(self):
         data = self.fetch()
@@ -50,7 +40,7 @@ class BaseThreadedEngine(object):
         raise NotImplementedError
 
 
-class UserProfileEngine(BaseThreadedEngine):
+class UserProfileEngine(BaseEngine):
     def should_run(self):
         facebook_id = self.facebook_user.user_id
         return not models.FacebookUserProfile.objects.filter(
@@ -76,7 +66,7 @@ class UserProfileEngine(BaseThreadedEngine):
         profile.save()
 
 
-class UserLikeEngine(BaseThreadedEngine):
+class UserLikeEngine(BaseEngine):
     def fetch(self):
         graph = facepy.GraphAPI(self.facebook_user.access_token)
         likes = []

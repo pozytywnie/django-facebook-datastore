@@ -7,13 +7,6 @@ from facebook_datastore import factories
 from facebook_datastore import models
 
 
-class TestBaseThreadedEngine(TestCase):
-    def test_basic_usage(self):
-        dummy_user = object()
-        engine = engines.BaseThreadedEngine(dummy_user)
-        self.assertRaises(NotImplementedError, engine.run())
-
-
 class TestUserProfileEngine(TestCase):
     def setUp(self):
         with open(path.join(path.dirname(__file__), "test_data/test_data.json")) as data_file:
