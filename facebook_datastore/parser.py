@@ -1,7 +1,7 @@
 import datetime
+import json
 import logging
 
-from django.utils import simplejson
 
 logger = logging.getLogger(__name__)
 
@@ -71,7 +71,7 @@ class FacebookDataParser(FacebookDataBaseParser):
             raise FacebookDataParserError("Birthday date: %s" % e.message)
 
     def parse_raw_data(self):
-        return simplejson.dumps(self.data)
+        return json.dumps(self.data)
 
     def parse_gender(self):
         gender_name = self.data.get('gender', None)
