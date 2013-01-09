@@ -41,11 +41,6 @@ class BaseEngine(object):
 
 
 class UserProfileEngine(BaseEngine):
-    def should_run(self):
-        facebook_id = self.facebook_user.user_id
-        return not models.FacebookUserProfile.objects.filter(
-            facebook_id=facebook_id).exists()
-
     def fetch(self):
         graph = facepy.GraphAPI(self.facebook_user.access_token)
         return graph.get('me')
