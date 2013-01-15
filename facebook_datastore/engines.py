@@ -75,8 +75,11 @@ class UserLikeEngine(BaseEngine):
     def parse(self, data):
         for like in data:
             like['id'] = int(like['id'])
-            like['created_time'] = isodate.parse_datetime(like['created_time'])
-            yield like
+            if 'created_time' in like:
+                like['created_time'] = isodate.parse_datetime(like['created_time'])
+                yield like
+            else:
+                logger.error("No created_time for like %s and user %d" % (unicode(like), self.facebook_user.id))
 
     def get_user(self):
         try:
