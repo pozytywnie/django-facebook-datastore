@@ -50,15 +50,15 @@ class UserProfileEngine(BaseEngine):
         return parser_instance.run()
 
     def save(self, data):
-        profile = models.FacebookUserProfile.objects.create_or_update(data)
         try:
             user = User.objects.get(id=self.facebook_user.id)
         except User.DoesNotExist:
             message = "UserProfileEngine missing user for facebook_user %d"
             logger.warning(message % self.facebook_user.id)
         else:
-            profile.user = user
-        profile.save()
+            profile, created = models.FacebookUserProfile.objects.get_or_create(user=user, defaults=data)
+            if not created:
+                profile.update(data)
 
 
 class UserLikeEngine(BaseEngine):
