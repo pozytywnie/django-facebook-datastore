@@ -58,7 +58,7 @@ class FacebookUserProfile(models.Model):
 
 class FacebookUserLike(models.Model):
     user = models.ForeignKey('auth.User')
-    name = models.CharField(max_length=250)
+    name = models.TextField()
     category = models.CharField(max_length=250)
     facebook_id = models.BigIntegerField()
     created_time = models.DateTimeField()
