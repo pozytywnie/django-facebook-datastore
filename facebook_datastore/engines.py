@@ -59,6 +59,7 @@ class UserProfileEngine(BaseEngine):
             profile, created = models.FacebookUserProfile.objects.get_or_create(user=user, defaults=data)
             if not created:
                 profile.update(data)
+                profile.save()
 
 
 class UserLikeEngine(BaseEngine):

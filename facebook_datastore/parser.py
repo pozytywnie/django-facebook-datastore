@@ -58,6 +58,22 @@ class FacebookDataParser(FacebookDataBaseParser):
     def parse_last_name(self):
         return self.data.get('last_name', None)
 
+    def parse_locale(self):
+        return self.data.get('locale', None)
+
+    def parse_username(self):
+        return self.data.get('username', None)
+
+    def parse_location_name(self):
+        location = self.data.get('location', None)
+        if location:
+            return location.get('name', None)
+
+    def parse_location_id(self):
+        location = self.data.get('location', None)
+        if location:
+            return location.get('id', None)
+
     def parse_name(self):
         return self.data.get('name', None)
 
