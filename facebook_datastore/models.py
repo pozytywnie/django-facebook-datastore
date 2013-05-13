@@ -65,3 +65,11 @@ class FacebookUserLike(models.Model):
 
     class Meta:
         unique_together = ("user", "facebook_id")
+
+
+class FacebookFriend(models.Model):
+    user = models.ForeignKey('auth.User')
+    friend_facebook_id = models.BigIntegerField()
+
+    class Meta:
+        unique_together = (('user', 'friend_facebook_id'),)

@@ -15,6 +15,7 @@ class TestUserProfileEngine(TestCase):
         self.expected_facebook_id = 100002364688506
         self.facebook_user = factories.FacebookUserFactory(
             user_id=self.expected_facebook_id)
+        self.facebook_user.save()
 
     def test_if_engine_creates_profile(self):
         test_data = self.data
