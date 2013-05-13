@@ -12,7 +12,7 @@ setup(
         'django>=1.4',
         'facebook-javascript-authentication',
         'facebook-javascript-sdk',
-        'factory-boy',
+        'factory-boy<2.0',
         'isodate',
         'south>=0.7.5',
     ),
