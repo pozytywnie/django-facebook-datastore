@@ -109,4 +109,41 @@ class UserLikeEngine(BaseEngine):
         removed_likes.delete()
 
 
-ENGINES_ENABLED = [UserProfileEngine, UserLikeEngine]
+class FacebookFriendEngine(BaseEngine):
+    def fetch(self):
+        graph = facepy.GraphAPI(self.facebook_user.access_token)
+        friends = []
+
+        response = graph.get('me/friends', True)
+        for page in response:
+            if 'data' in page and page['data']:
+                friends += page['data']
+        return friends
+
+    def parse(self, data):
+        for friend in data:
+            yield int(friend['id'])
+
+    def save(self, data):
+        user = self.get_user()
+        processed_friends = []
+        for friend_id in data:
+            friend, _ = (models.FacebookFriend.objects
+                         .get_or_create(user=user,
+                                        friend_facebook_id=friend_id))
+            processed_friends.append(friend.id)
+
+        removed_friends = models.FacebookFriend.objects.filter(user=user)
+        removed_friends = removed_friends.exclude(id__in=processed_friends)
+        removed_friends.delete()
+
+    def get_user(self):
+        try:
+            return User.objects.get(id=self.facebook_user.id)
+        except User.DoesNotExist:
+            message = "UserProfileEngine missing user for facebook_user %d"
+            logger.warning(message % self.facebook_user.id)
+            raise
+
+
+ENGINES_ENABLED = [UserProfileEngine, UserLikeEngine, FacebookFriendEngine]
