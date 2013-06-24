@@ -3,6 +3,7 @@ import isodate
 import logging
 
 from django.contrib.auth.models import User
+from django.utils import timezone
 from facebook_datastore import models
 from facebook_datastore import parser
 import facepy
@@ -78,9 +79,9 @@ class UserLikeEngine(BaseEngine):
             like['id'] = int(like['id'])
             if 'created_time' in like:
                 like['created_time'] = isodate.parse_datetime(like['created_time'])
-                yield like
             else:
-                logger.error("No created_time for like %s and user %d" % (unicode(like), self.facebook_user.id))
+                like['created_time'] = timezone.now()
+            yield like
 
     def get_user(self):
         try:
