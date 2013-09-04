@@ -96,14 +96,17 @@ class UserLikeEngine(BaseEngine):
         processed_likes = []
         for like in data:
             user_like = models.FacebookUserLike.objects
-            defaults = {'name': like['name'],
-                        'category': like['category'],
-                        'created_time': like['created_time']}
+            if 'name' in like:
+                defaults = {'name': like['name'],
+                            'category': like['category'],
+                            'created_time': like['created_time']}
 
-            like, _ = user_like.get_or_create(user=user,
-                                              facebook_id=like['id'],
-                                              defaults=defaults)
-            processed_likes.append(like.id)
+                like, _ = user_like.get_or_create(user=user,
+                                                  facebook_id=like['id'],
+                                                  defaults=defaults)
+                processed_likes.append(like.id)
+            else:
+                logger.warning('Like without a name', extra={'like': like})
 
         removed_likes = models.FacebookUserLike.objects.filter(user=user)
         removed_likes = removed_likes.exclude(id__in=processed_likes)
