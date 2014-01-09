@@ -87,8 +87,9 @@ class UserLikeEngine(BaseEngine):
         try:
             return User.objects.get(id=self.facebook_user.id)
         except User.DoesNotExist:
-            message = "UserProfileEngine missing user for facebook_user %d"
-            logger.warning(message % self.facebook_user.id)
+            message = "UserProfileEngine missing user"
+            logger.warning(message,
+                           extra={'facebook_user': self.facebook_user.id})
             raise
 
     def save(self, data):

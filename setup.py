@@ -4,7 +4,7 @@ from setuptools import setup
 
 setup(
     name='facebook-datastore',
-    version='0.3.3',
+    version='3.0.0',
     description="Facebook Datastore",
     maintainer="Tomasz Wysocki",
     maintainer_email="tomasz@wysocki.info",
@@ -12,7 +12,7 @@ setup(
         'django>=1.4',
         'facebook-javascript-authentication',
         'facebook-javascript-sdk',
-        'factory-boy<2.0',
+        'factory-boy',
         'isodate',
         'south>=0.7.5',
     ),
