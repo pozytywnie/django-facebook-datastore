@@ -49,11 +49,11 @@ class FacebookUserProfile(models.Model):
     objects = FacebookUserProfileManager()
 
     def update(self, parameters):
-        for key, value in parameters.iteritems():
+        for key, value in parameters.items():
             if hasattr(self, key):
                 setattr(self, key, value)
             else:
-                logger.warning("FacebookUserProfile has no '%s' atribute" % key)
+                logger.warning("FacebookUserProfile has no '%s' attribute" % key)
 
 
 class FacebookUserLike(models.Model):

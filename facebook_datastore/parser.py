@@ -21,7 +21,6 @@ class FacebookDataBaseParser(object):
         self.ignore_errors = ignore_errors
         self.log_errors = log_errors
 
-
     def run(self):
         params = {}
         for method in self.get_parsing_methods():
@@ -29,11 +28,11 @@ class FacebookDataBaseParser(object):
                 params[method.replace(self.parse_prefix, '', 1)] = getattr(self, method)()
             except FacebookDataParserCriticalError as e:
                 if self.log_errors:
-                    logger.error(e.message, exc_info=True)
+                    logger.error(e, exc_info=True)
                 raise
             except FacebookDataParserError as e:
                 if self.log_errors:
-                    logger.error(e.message, exc_info=True)
+                    logger.error(e, exc_info=True)
                 if not self.ignore_errors:
                     raise
 
@@ -84,7 +83,7 @@ class FacebookDataParser(FacebookDataBaseParser):
         try:
             return datetime.datetime.strptime(datestr, "%m/%d/%Y").date()
         except ValueError as e:
-            raise FacebookDataParserError("Birthday date: %s" % e.message)
+            raise FacebookDataParserError("Birthday date: %s" % e)
 
     def parse_raw_data(self):
         return json.dumps(self.data)
