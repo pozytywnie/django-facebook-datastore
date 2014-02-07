@@ -4,9 +4,9 @@ import logging
 
 from django.contrib.auth.models import User
 from django.utils import timezone
+from facebook_datastore import graph_api
 from facebook_datastore import models
 from facebook_datastore import parser
-import facepy
 
 logger = logging.getLogger(__name__)
 
@@ -43,7 +43,7 @@ class BaseEngine(object):
 
 class UserProfileEngine(BaseEngine):
     def fetch(self):
-        graph = facepy.GraphAPI(self.facebook_user.access_token)
+        graph = graph_api.GraphAPI(self.facebook_user.access_token)
         return graph.get('me')
 
     def parse(self, data):
@@ -66,7 +66,7 @@ class UserProfileEngine(BaseEngine):
 
 class UserLikeEngine(BaseEngine):
     def fetch(self):
-        graph = facepy.GraphAPI(self.facebook_user.access_token)
+        graph = graph_api.GraphAPI(self.facebook_user.access_token)
         likes = []
 
         response = graph.get('me/likes', True)
@@ -118,7 +118,7 @@ class UserLikeEngine(BaseEngine):
 
 class FacebookFriendEngine(BaseEngine):
     def fetch(self):
-        graph = facepy.GraphAPI(self.facebook_user.access_token)
+        graph = graph_api.GraphAPI(self.facebook_user.access_token)
         friends = []
 
         response = graph.get('me/friends', True)

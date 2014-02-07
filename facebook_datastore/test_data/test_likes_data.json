@@ -1,20 +1,23 @@
-[
-      {
-         "name": "DajeRade.com",
-         "category": "Website",
-         "id": "200667953340505",
-         "created_time": "2012-08-01T14:17:43+0000"
-      },
-      {
-         "name": "Test",
-         "category": "Fictional character",
-         "id": "325732900852284",
-         "created_time": "2012-07-24T14:17:24+0000"
-      },
-      {
-         "name": "Diabe\u0142 tkwi w dodatkach",
-         "category": "Website",
-         "id": "206089216161476",
-         "created_time": "2012-06-20T07:27:37+0000"
-      }
-]
+{
+    "data":
+        [
+              {
+                 "name": "DajeRade.com",
+                 "category": "Website",
+                 "id": "200667953340505",
+                 "created_time": "2012-08-01T14:17:43+0000"
+              },
+              {
+                 "name": "Test",
+                 "category": "Fictional character",
+                 "id": "325732900852284",
+                 "created_time": "2012-07-24T14:17:24+0000"
+              },
+              {
+                 "name": "Diabe\u0142 tkwi w dodatkach",
+                 "category": "Website",
+                 "id": "206089216161476",
+                 "created_time": "2012-06-20T07:27:37+0000"
+              }
+        ]
+}

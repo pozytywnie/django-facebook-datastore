@@ -2,30 +2,38 @@ from django import test
 import json
 from os import path
 
+try:
+    from unittest import mock
+except ImportError:
+    import mock
+
 from facebook_datastore import engines
 from facebook_datastore import factories
+from facebook_datastore import graph_api
 from facebook_datastore import models
+
+
+def get_data_from_file(file_path):
+    base_path = path.dirname(__file__)
+    with open(path.join(base_path, file_path)) as data_file:
+        raw_data = data_file.read()
+    data = json.loads(raw_data)
+    return graph_api.get_data_object(raw_data, data)
 
 
 class TestUserProfileEngine(test.TestCase):
     def setUp(self):
-        with open(path.join(path.dirname(__file__),
-                  "test_data/test_data.json")) as data_file:
-            self.raw_data = data_file.read()
-        self.data = json.loads(self.raw_data)
+        self.data = get_data_from_file("test_data/test_data.json")
         self.expected_facebook_id = 100002364688506
         self.facebook_user = factories.FacebookUserFactory(
             user_id=self.expected_facebook_id)
         self.facebook_user.save()
 
-    def test_if_engine_creates_profile(self):
-        test_data = self.data
+    @mock.patch('facepy.graph_api.GraphAPI.get')
+    def test_if_engine_creates_profile(self, graph_api_get):
+        graph_api_get.return_value = self.data
 
-        class UserProfileEngine(engines.UserProfileEngine):
-            def fetch(self):
-                return test_data
-
-        engine = UserProfileEngine(self.facebook_user)
+        engine = engines.UserProfileEngine(self.facebook_user)
         engine.perform()
 
         profile = models.FacebookUserProfile.objects.get(
@@ -40,23 +48,15 @@ class TestUserProfileEngine(test.TestCase):
 
 class TestUserLikeEngine(test.TestCase):
     def setUp(self):
-        with open(path.join(path.dirname(__file__),
-                  "test_data/test_likes_data.json")) as data_file:
-            self.raw_data = data_file.read()
-        self.data = json.loads(self.raw_data)
+        self.data = get_data_from_file("test_data/test_likes_data.json")
         self.facebook_id = 100002364688506
         self.facebook_user = factories.FacebookUserFactory(
             user_id=self.facebook_id)
 
-    def test_if_engine_creates_likes(self):
-        test_data = self.data
-
-        class UserLikeEngine(engines.UserLikeEngine):
-
-            def fetch(self):
-                return test_data
-
-        engine = UserLikeEngine(self.facebook_user)
+    @mock.patch('facepy.graph_api.GraphAPI.get')
+    def test_if_engine_creates_likes(self, graph_api_get):
+        graph_api_get.return_value = [self.data]
+        engine = engines.UserLikeEngine(self.facebook_user)
         engine.perform()
         likes = models.FacebookUserLike.objects.filter(
             user__id=self.facebook_user.id)

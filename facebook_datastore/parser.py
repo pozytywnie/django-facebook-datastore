@@ -1,5 +1,4 @@
 import datetime
-import json
 import logging
 
 
@@ -92,7 +91,7 @@ class FacebookDataParser(FacebookDataBaseParser):
             raise FacebookDataParserError("Birthday date: %s" % e)
 
     def parse_raw_data(self):
-        return json.dumps(self.data)
+        return self.data.raw_data
 
     def parse_gender(self):
         gender_name = self.data.get('gender', None)

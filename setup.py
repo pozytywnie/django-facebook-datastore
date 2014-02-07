@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 from setuptools import find_packages
 from setuptools import setup
+import sys
 
 setup(
     name='facebook-datastore',
@@ -15,7 +16,7 @@ setup(
         'factory-boy',
         'isodate',
         'south>=0.7.5',
-    ),
+    ) + (('mock',) if sys.version_info.major < 3 else ()),
     packages=find_packages(),
     include_package_data=True,
 )
