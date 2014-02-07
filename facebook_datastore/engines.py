@@ -57,7 +57,8 @@ class UserProfileEngine(BaseEngine):
             message = "UserProfileEngine missing user for facebook_user %d"
             logger.warning(message % self.facebook_user.id)
         else:
-            profile, created = models.FacebookUserProfile.objects.get_or_create(user=user, defaults=data)
+            profile, created = (models.FacebookUserProfile.objects
+                                .get_or_create(user=user, defaults=data))
             if not created:
                 profile.update(data)
                 profile.save()
@@ -78,7 +79,8 @@ class UserLikeEngine(BaseEngine):
         for like in data:
             like['id'] = int(like['id'])
             if 'created_time' in like:
-                like['created_time'] = isodate.parse_datetime(like['created_time'])
+                like['created_time'] = isodate.parse_datetime(
+                    like['created_time'])
             else:
                 like['created_time'] = timezone.now()
             yield like

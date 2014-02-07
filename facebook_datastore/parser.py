@@ -9,6 +9,7 @@ logger = logging.getLogger(__name__)
 class FacebookDataParserError(Exception):
     pass
 
+
 class FacebookDataParserCriticalError(FacebookDataParserError):
     pass
 
@@ -25,7 +26,8 @@ class FacebookDataBaseParser(object):
         params = {}
         for method in self.get_parsing_methods():
             try:
-                params[method.replace(self.parse_prefix, '', 1)] = getattr(self, method)()
+                params[method.replace(self.parse_prefix, '', 1)] = getattr(
+                    self, method)()
             except FacebookDataParserCriticalError as e:
                 if self.log_errors:
                     logger.error(e, exc_info=True)
@@ -39,7 +41,11 @@ class FacebookDataBaseParser(object):
         return params
 
     def get_parsing_methods(self):
-        return [name for name in dir(self) if (name.startswith(self.parse_prefix) and callable(getattr(self, name)))]
+        return [
+            name for name in dir(self)
+            if (name.startswith(self.parse_prefix)
+                and callable(getattr(self, name)))
+        ]
 
 
 class FacebookDataParser(FacebookDataBaseParser):
@@ -96,7 +102,8 @@ class FacebookDataParser(FacebookDataBaseParser):
             return "m"
         if gender_name == "female":
             return "f"
-        raise FacebookDataParserError("'%s' is not valid gender." % gender_name)
+        raise FacebookDataParserError("'%s' is not valid gender."
+                                      % gender_name)
 
     def parse_email(self):
         return self.data.get('email', None)

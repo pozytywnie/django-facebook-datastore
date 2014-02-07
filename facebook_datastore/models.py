@@ -35,7 +35,8 @@ class FacebookUserProfile(models.Model):
     username = models.TextField(null=True, blank=True)
     email = models.EmailField(null=True, blank=True, max_length=254)
 
-    gender = models.CharField(max_length=1, choices=GENDERS, null=True, blank=True)
+    gender = models.CharField(max_length=1, choices=GENDERS, null=True,
+                              blank=True)
     locale = models.CharField(max_length=5, null=True, blank=True)
     link = models.URLField(null=True, blank=True)
     birthday = models.DateField(null=True, blank=True)
@@ -53,7 +54,8 @@ class FacebookUserProfile(models.Model):
             if hasattr(self, key):
                 setattr(self, key, value)
             else:
-                logger.warning("FacebookUserProfile has no '%s' attribute" % key)
+                logger.warning("FacebookUserProfile has no '%s' attribute"
+                               % key)
 
 
 class FacebookUserLike(models.Model):
