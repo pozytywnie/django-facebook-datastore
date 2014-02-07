@@ -1,6 +1,9 @@
 from datastore.settings import *
 from os import path
-from urlparse import urljoin
+try:
+    from urlparse import urljoin
+except ImportError:
+    from urllib.parse import urljoin
 
 PROJECT_ROOT = path.abspath(path.dirname(__file__))
 
