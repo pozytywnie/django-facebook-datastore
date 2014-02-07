@@ -1,4 +1,4 @@
-from django.test import TestCase
+from django import test
 import json
 from os import path
 
@@ -7,7 +7,7 @@ from facebook_datastore import factories
 from facebook_datastore import models
 
 
-class TestUserProfileEngine(TestCase):
+class TestUserProfileEngine(test.TestCase):
     def setUp(self):
         with open(path.join(path.dirname(__file__), "test_data/test_data.json")) as data_file:
             self.raw_data = data_file.read()
@@ -36,7 +36,7 @@ class TestUserProfileEngine(TestCase):
         self.assertEqual(self.facebook_user.id, profile.user.id)
 
 
-class TestUserLikeEngine(TestCase):
+class TestUserLikeEngine(test.TestCase):
     def setUp(self):
         with open(path.join(path.dirname(__file__), "test_data/test_likes_data.json")) as data_file:
             self.raw_data = data_file.read()
