@@ -3,7 +3,7 @@ from facepy import graph_api
 
 class GraphAPI(graph_api.GraphAPI):
     def _parse(self, data):
-        parsed = super(GraphApi, self)._parse(data)
+        parsed = super(GraphAPI, self)._parse(data)
         return get_data_object(data.decode('utf-8'), parsed)
 
 

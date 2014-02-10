@@ -5,7 +5,7 @@ import sys
 
 setup(
     name='facebook-datastore',
-    version='3.0.1',
+    version='3.0.2',
     description="Facebook Datastore",
     maintainer="Tomasz Wysocki",
     maintainer_email="tomasz@wysocki.info",
