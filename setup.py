@@ -18,5 +18,4 @@ setup(
         'south>=0.7.5',
     ) + (('mock',) if sys.version_info.major < 3 else ()),
     packages=find_packages(),
-    include_package_data=True,
 )
