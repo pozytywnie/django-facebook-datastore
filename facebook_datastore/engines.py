@@ -109,7 +109,7 @@ class UserLikeEngine(BaseEngine):
                                                   defaults=defaults)
                 processed_likes.append(like.id)
             else:
-                logger.warning('Like without a name', extra={'like': like})
+                logger.info('Like without a name', extra={'like': like})
 
         removed_likes = models.FacebookUserLike.objects.filter(user=user)
         removed_likes = removed_likes.exclude(id__in=processed_likes)
