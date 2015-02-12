@@ -43,8 +43,11 @@ class BaseEngine(object):
 
 class UserProfileEngine(BaseEngine):
     def fetch(self):
-        graph = graph_api.GraphAPI(self.facebook_user.access_token)
-        return graph.get('me')
+        graph = graph_api.get_graph_api(self.facebook_user)
+        return graph.get('me?fields=id,name,first_name,middle_name,last_name,'
+                         'email,gender,locale,link,birthday,location,'
+                         'relationship_status,website,about,age_range,'
+                         'devices')
 
     def parse(self, data):
         parser_instance = parser.FacebookDataParser(data=data)
@@ -66,7 +69,7 @@ class UserProfileEngine(BaseEngine):
 
 class UserLikeEngine(BaseEngine):
     def fetch(self):
-        graph = graph_api.GraphAPI(self.facebook_user.access_token)
+        graph = graph_api.get_graph_api(self.facebook_user)
         likes = []
 
         response = graph.get('me/likes', True)
@@ -118,7 +121,7 @@ class UserLikeEngine(BaseEngine):
 
 class FacebookFriendEngine(BaseEngine):
     def fetch(self):
-        graph = graph_api.GraphAPI(self.facebook_user.access_token)
+        graph = graph_api.get_graph_api(self.facebook_user)
         friends = []
 
         response = graph.get('me/friends', True)

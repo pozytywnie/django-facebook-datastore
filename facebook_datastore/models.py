@@ -39,13 +39,24 @@ class FacebookUserProfile(models.Model):
                               blank=True)
     locale = models.CharField(max_length=5, null=True, blank=True)
     link = models.URLField(null=True, blank=True)
-    birthday = models.DateField(null=True, blank=True)
-    location_name = models.TextField(null=True, blank=True)
-    location_id = models.TextField(null=True, blank=True)
-    relationship_status = models.TextField(null=True, blank=True)
-    website = models.TextField(null=True, blank=True)
-    about_me = models.TextField(blank=True, null=True)
+    birthday = models.DateField(null=True, blank=True,
+                                help_text='needs user_birthday')
+    location_name = models.TextField(null=True, blank=True,
+                                     help_text='needs user_location')
+    location_id = models.TextField(null=True, blank=True,
+                                   help_text='needs user_location')
+    relationship_status = models.TextField(
+        null=True, blank=True, help_text='needs user_relationship'
+    )
+    website = models.TextField(null=True, blank=True,
+                               help_text='needs user_website')
+    about_me = models.TextField(blank=True, null=True,
+                                help_text='needs user_about_me')
     raw_data = models.TextField(blank=True, null=True)
+    age_range_min = models.IntegerField(blank=True, null=True)
+    age_range_max = models.IntegerField(blank=True, null=True)
+    uses_ios = models.BooleanField(default=False)
+    uses_android = models.BooleanField(default=False)
 
     objects = FacebookUserProfileManager()
 

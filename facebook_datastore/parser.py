@@ -106,3 +106,24 @@ class FacebookDataParser(FacebookDataBaseParser):
 
     def parse_email(self):
         return self.data.get('email', None)
+
+    def parse_age_range_min(self):
+        age_range = self.data.get('age_range', {})
+        return age_range.get('min', None)
+
+    def parse_age_range_max(self):
+        age_range = self.data.get('age_range', {})
+        return age_range.get('max', None)
+
+    def parse_uses_ios(self):
+        return self._parse_mobile_os('iOS')
+
+    def parse_uses_android(self):
+        return self._parse_mobile_os('Android')
+
+    def _parse_mobile_os(self, os):
+        devices = self.data.get('devices', [])
+        for device in devices:
+            if device['os'] == os:
+                return True
+        return False

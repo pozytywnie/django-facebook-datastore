@@ -36,5 +36,17 @@
   "locale": "en_GB",
   "verified": true,
   "updated_time": "2012-02-24T10:00:54+0000",
-  "type": "user"
+  "type": "user",
+  "age_range": {
+    "min": 21
+  },
+  "devices": [
+    {
+      "os": "Android"
+    },
+    {
+      "hardware": "iPhone",
+      "os": "iOS"
+    }
+  ]
 }
