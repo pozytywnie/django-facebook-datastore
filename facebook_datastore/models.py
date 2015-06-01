@@ -23,7 +23,7 @@ class FacebookUserProfile(models.Model):
         ('f', 'Female'),
     )
 
-    user = models.ForeignKey('auth.User', null=True, blank=True, unique=True)
+    user = models.OneToOneField('auth.User')
 
     facebook_id = models.BigIntegerField(unique=True)
     access_token = models.TextField(null=True, blank=True)
