@@ -97,9 +97,9 @@ class FacebookDataParser(FacebookDataBaseParser):
         gender_name = self.data.get('gender', None)
         if gender_name is None:
             return None
-        if gender_name == "male":
+        if gender_name in ["male", "male (hidden)"]:
             return "m"
-        if gender_name == "female":
+        if gender_name in ["female", "female (hidden)"]:
             return "f"
         raise FacebookDataParserError("'%s' is not valid gender."
                                       % gender_name)
