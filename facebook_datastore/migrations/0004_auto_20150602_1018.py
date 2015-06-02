@@ -8,11 +8,11 @@ from django.conf import settings
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('facebook_datastore', '0003_auto_20150601_1143'),
+        ('facebook_datastore', '0003_auto_20150602_1017'),
     ]
 
     operations = [
-                migrations.AlterField(
+        migrations.AlterField(
             model_name='facebookuserprofile',
             name='user',
             field=models.OneToOneField(to=settings.AUTH_USER_MODEL),
