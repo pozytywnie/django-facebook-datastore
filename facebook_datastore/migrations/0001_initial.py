@@ -59,10 +59,6 @@ class Migration(migrations.Migration):
                 ('website', models.TextField(help_text=b'needs user_website', null=True, blank=True)),
                 ('about_me', models.TextField(help_text=b'needs user_about_me', null=True, blank=True)),
                 ('raw_data', models.TextField(null=True, blank=True)),
-                ('age_range_min', models.IntegerField(null=True, blank=True)),
-                ('age_range_max', models.IntegerField(null=True, blank=True)),
-                ('uses_ios', models.BooleanField(default=False)),
-                ('uses_android', models.BooleanField(default=False)),
                 ('user', models.ForeignKey(null=True, blank=True, to=settings.AUTH_USER_MODEL, unique=True)),
             ],
             options={
