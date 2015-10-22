@@ -104,7 +104,7 @@ class UserLikeEngine(BaseEngine):
             user_like = models.FacebookUserLike.objects
             if 'name' in like:
                 defaults = {'name': like['name'],
-                            'category': like['category'],
+                            'category': like.get('category', 'undefined'),
                             'created_time': like['created_time']}
 
                 like, _ = user_like.get_or_create(user=user,
